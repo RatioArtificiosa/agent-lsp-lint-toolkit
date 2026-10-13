@@ -18,11 +18,13 @@ jobs:
           node-version: 20
 
       - name: Syntax check every .mjs
+        shell: bash
         run: |
           node --check mcp/server.mjs
           for f in mcp/lib/*.mjs mcp/test/client.mjs hooks/format.js lsp/lsp-open-proxy.js; do node --check "$f"; done
 
       - name: MCP handshake test
+        shell: bash
         run: node mcp/test/client.mjs
 
       - name: No emdashes in prose
