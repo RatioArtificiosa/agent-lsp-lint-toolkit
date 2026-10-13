@@ -35,11 +35,16 @@ jobs:
       - name: No secrets or machine paths
         shell: bash
         run: |
-          # The workflow file and CONTRIBUTING document these exact patterns, so
-          # they are excluded: without the exclusion the check flags its own
-          # definition, which is a false positive by construction.
-          ! grep -rEi 'hel''ius|api-ke''y|api_ke''y' --exclude-dir=.git --exclude=ci.yml --exclude=CONTRIBUTING.md . || (echo "secret pattern found" && exit 1)
-          ! grep -rE '[A-Za-z]:\\Use''rs\\' --exclude-dir=.git --exclude=ci.yml --exclude=CONTRIBUTING.md . || (echo "machine path found" && exit 1)
+          # The patterns are assembled by concatenation so this file never
+          # contains them contiguously: otherwise the check flags its own
+          # definition, a false positive by construction. Bash joins adjacent
+          # quoted parts, so the runtime pattern is the full three-way secret
+          # check while the file text holds only fragments. The --exclude flags
+          # stay as a second layer for CONTRIBUTING, which documents the command.
+          PAT1='hel''ius|api-ke''y|api_ke''y'
+          ! grep -rEi "$PAT1" --exclude-dir=.git --exclude=ci.yml --exclude=CONTRIBUTING.md . || (echo "secret pattern found" && exit 1)
+          PAT2='[A-Za-z]:\\Use''rs\\'
+          ! grep -rE "$PAT2" --exclude-dir=.git --exclude=ci.yml --exclude=CONTRIBUTING.md . || (echo "machine path found" && exit 1)
 
       - name: Skill frontmatter check
         shell: bash

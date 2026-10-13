@@ -17,6 +17,10 @@ Run the secret grep on the staged diff, not just the working tree:
 git diff --cached | grep -E 'hel''ius|api-ke''y|api_ke''y|[A-Za-z]:\\Use''rs\\|O''rca'
 ```
 
+Bash joins adjacent quoted parts, so the runtime pattern is the full secret
+check, but this file never holds those strings contiguously. Otherwise the
+documentation would flag itself.
+
 Any hit blocks the commit until resolved.
 
 ## Checks
