@@ -21,7 +21,7 @@ Your agent writes code. Then it needs three things: to understand the code it ju
 
 This toolkit fixes that. It gives your agent working language servers, automatic formatting, and a way to check its own toolchain. One install, five minutes, seven languages.
 
-## ✨ What changes on day one
+## What changes on day one
 
 > [!TIP]
 > **Your agent stops guessing what code means.** It can jump to definitions, see types on hover, and list every symbol in a file. That is the difference between an agent that understands your project and one that greps around hoping for the best.
@@ -32,7 +32,7 @@ This toolkit fixes that. It gives your agent working language servers, automatic
 > [!TIP]
 > **Unhealthy setups diagnose themselves.** When something is missing, your agent finds out what, and what command fixes it, instead of failing in confusing ways.
 
-## 🗺️ The languages
+## The languages
 
 | Language                | Code intelligence   | Formatting              |
 | :---------------------- | :-----------------: | :---------------------: |
@@ -44,7 +44,7 @@ This toolkit fixes that. It gives your agent working language servers, automatic
 | Zig                     |         Yes         |           Yes           |
 | AssemblyScript          | Through TypeScript  |           Yes           |
 
-## 🚀 Get started in five minutes
+## Get started in five minutes
 
 Pick the installer for your machine. Each one checks what you already have before it installs anything, and you can run it again any time.
 
@@ -85,14 +85,14 @@ node mcp/test/client.mjs
 > [!IMPORTANT]
 > That last command must report zero failures. If it does not, the output tells you exactly what is missing.
 
-## 📚 Go deeper
+## Go deeper
 
 | Guide | What it covers |
 | :---- | :------------- |
 | **[User Guide](USER-GUIDE.md)** | How each piece works, what each language needs, the full troubleshooting table, and what the proxy does and does not do. Written so a beginner can follow it and an expert will not roll their eyes. |
 | **[Contributing](CONTRIBUTING.md)** | How to add a language, fix a bug, or improve the docs. Small proven changes beat big speculative ones. |
 
-## 💬 One honest paragraph
+## One honest paragraph
 
 This toolkit cannot write good code for you. It cannot replace tests, code review, or judgment. What it does is remove an entire category of avoidable failures: the missing server, the unformatted file, the mystery error that turns out to be a version mismatch. Your agent gets a workspace where the basics work, so its effort goes into your actual problem.
 
