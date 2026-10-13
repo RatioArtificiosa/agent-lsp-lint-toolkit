@@ -1,0 +1,49 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Syntax check every .mjs
+        run: |
+          node --check mcp/server.mjs
+          for f in mcp/lib/*.mjs mcp/test/client.mjs hooks/format.js lsp/lsp-open-proxy.js; do node --check "$f"; done
+
+      - name: MCP handshake test
+        run: node mcp/test/client.mjs
+
+      - name: No emdashes in prose
+        shell: bash
+        run: |
+          ! grep -r --include='*.md' '[—–]' . || (echo "emdash found in markdown" && exit 1)
+
+      - name: No secrets or machine paths
+        shell: bash
+        run: |
+          # The workflow file and CONTRIBUTING document these exact patterns, so
+          # they are excluded: without the exclusion the check flags its own
+          # definition, which is a false positive by construction.
+          ! grep -rEi 'hel''ius|api-ke''y|api_ke''y' --exclude-dir=.git --exclude=ci.yml --exclude=CONTRIBUTING.md . || (echo "secret pattern found" && exit 1)
+          ! grep -rE '[A-Za-z]:\\Use''rs\\' --exclude-dir=.git --exclude=ci.yml --exclude=CONTRIBUTING.md . || (echo "machine path found" && exit 1)
+
+      - name: Skill frontmatter check
+        shell: bash
+        run: |
+          for d in .agents/skills/*/; do
+            name=$(basename "$d")
+            grep -q "^name: $name\$" "$d/SKILL.md" || (echo "skill name mismatch in $d" && exit 1)
+            grep -q '^description: ' "$d/SKILL.md" || (echo "missing description in $d" && exit 1)
+          done

@@ -1,0 +1,21 @@
+{
+  "extensions": [
+    ".ts",
+    ".tsx",
+    ".js",
+    ".jsx",
+    ".mjs",
+    ".cjs"
+  ],
+  "commands": [
+    {
+      "command": "biome",
+      "args": [
+        "check",
+        "--write",
+        "--files-ignore-unknown=true"
+      ],
+      "shell": true
+    }
+  ]
+}

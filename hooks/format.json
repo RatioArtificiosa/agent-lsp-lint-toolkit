@@ -1,0 +1,41 @@
+{
+  "extensions": [".rs", ".py", ".go", ".c", ".h", ".cpp", ".cc", ".cxx", ".hpp", ".hxx", ".hh", ".ts", ".tsx", ".mts", ".cts", ".js", ".jsx", ".mjs", ".cjs", ".zig", ".zon"],
+  "commands": [
+    {
+      "only": [".rs"],
+      "command": "rustfmt",
+      "args": ["--edition", "2021"]
+    },
+    {
+      "only": [".py"],
+      "command": "ruff",
+      "args": ["check", "--fix", "--quiet"]
+    },
+    {
+      "only": [".py"],
+      "command": "ruff",
+      "args": ["format", "--quiet"]
+    },
+    {
+      "only": [".go"],
+      "command": "gofmt",
+      "args": ["-w"]
+    },
+    {
+      "only": [".c", ".h", ".cpp", ".cc", ".cxx", ".hpp", ".hxx", ".hh"],
+      "command": "clang-format",
+      "args": ["-i"]
+    },
+    {
+      "only": [".ts", ".tsx", ".mts", ".cts", ".js", ".jsx", ".mjs", ".cjs"],
+      "command": "biome",
+      "args": ["check", "--write", "--files-ignore-unknown=true"],
+      "shell": true
+    },
+    {
+      "only": [".zig", ".zon"],
+      "command": "zig",
+      "args": ["fmt"]
+    }
+  ]
+}
